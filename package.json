@@ -1,0 +1,13 @@
+{
+	"name": "traversy-mongo-socket",
+	"version": "1.0.0",
+	"main": "server.js",
+	"license": "MIT",
+	"dependencies": {
+		"mongoose": "^5.7.12",
+		"socket.io": "^2.3.0"
+	},
+	"scripts": {
+		"server": "nodemon server.js"
+	}
+}
