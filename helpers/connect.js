@@ -13,12 +13,12 @@ const connect = dbUrl => {
 	});
 
 	// Connect to Socket.io
-	client.on("connection", () => {
+	client.on("connection", socket => {
 		const chat = db.collection("chats");
 
 		//Create function to send status
 		const sendStatus = s => {
-			client.emit("status", s);
+			socket.emit("status", s);
 		};
 
 		// Get chats from mongo collection
@@ -29,12 +29,12 @@ const connect = dbUrl => {
 				{ _id: 1 }.toArray((err, res) => {
 					if (err) throw err;
 
-					client.emit("output", res);
+					socket.emit("output", res);
 				})
 			);
 
 		// Handle input events
-		client.on("input", data => {
+		socket.on("input", data => {
 			const name = data.name;
 			const message = data.message;
 
@@ -45,7 +45,7 @@ const connect = dbUrl => {
 			} else {
 				// Insert message to DB
 				chat.insert({ name, message }, () => {
-					client.emit("output", [data]);
+					socket.emit("output", [data]);
 
 					// Send status object
 					sendStatus({
@@ -58,10 +58,10 @@ const connect = dbUrl => {
 	});
 
 	// Handle clear
-	client.on("clear", data => {
+	socket.on("clear", data => {
 		// Remove all chats from collection
 		chat.remove({}, () => {
-			client.emit("cleared");
+			socket.emit("cleared");
 		});
 	});
 };
