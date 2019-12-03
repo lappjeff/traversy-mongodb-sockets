@@ -56,6 +56,7 @@ const connect = dbUrl => {
 			}
 		});
 	});
+
 	// Handle clear
 	client.on("clear", data => {
 		// Remove all chats from collection
