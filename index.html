@@ -56,16 +56,23 @@
 
                 const setStatus = s => {
                     status.textContent = s
+
+                    // reset status to default after 4 seconds
+                    if(s !== statusDefault) {
+                        const delay = setTimeout(() => {
+                            setStatus(statusDefault)
+                        }, 4000)
+                    }
                 }
 
-                // reset status to default after 4 seconds
-                if(s !== statusDefault) {
-                    const delay = setTimeout(() => {
-                        setStatus(statusDefault)
-                    }, 4000)
-                }
+                // connect to socket.io
+                const socket = io.connect('http://127.0.0.1:4200')
 
-            })
+                // check for connection
+                if(socket !== undefined) {
+                    console.log("Connected to socket...")
+                }
+            })()
         </script>
 	</body>
 </html>
