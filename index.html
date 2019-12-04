@@ -21,7 +21,7 @@
 						MongoChat
 						<button class="btn btn-danger" id="clear">Clear</button>
 					</h1>
-					<div class="status"></div>
+					<div id="status"></div>
 					<div id="chat">
 						<input
 							type="text"
@@ -45,6 +45,25 @@
                 const element = id => document.getElementById(id)
 
                 // Get elements
+                const status = element('status')
+                const messages = element('messages')
+                const textarea = element('textarea')
+                const username = element('username')
+                const clear = element('clear')
+
+                // Set default status
+                const statusDefault = status.textContent
+
+                const setStatus = s => {
+                    status.textContent = s
+                }
+
+                // reset status to default after 4 seconds
+                if(s !== statusDefault) {
+                    const delay = setTimeout(() => {
+                        setStatus(statusDefault)
+                    }, 4000)
+                }
 
             })
         </script>
